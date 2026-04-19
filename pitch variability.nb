@@ -1,0 +1,354 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     13135,        344]
+NotebookOptionsPosition[     12634,        327]
+NotebookOutlinePosition[     13048,        343]
+CellTagsIndexPosition[     13005,        340]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Force", " ", "decimal", " ", "output"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"$Post", "=", "N"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Base", " ", "assumptions"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"workingDaysPerYear", "=", "240."}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerCase", "=", "24."}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tileMassKg", "=", "0.375"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"kilnRateKgPerHour", "=", "500."}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"0.5", " ", 
+     RowBox[{"MT", "/", "h"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"shiftsPerWeek", "=", "12."}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"hoursPerShift", "=", "8."}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"daysPerWeek", "=", "5."}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Demand", ":", 
+     RowBox[{"240000", " ", 
+      RowBox[{"cases", "/", "year"}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"casesPerYear", "=", "240000."}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerYear", "=", 
+     RowBox[{"casesPerYear", "*", "tilesPerCase"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerDayDemand", "=", 
+     RowBox[{"tilesPerYear", "/", "workingDaysPerYear"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Split", " ", "demand", " ", "between", " ", "white", " ", "and", " ", 
+     "red"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"whiteShare", "=", "0.5"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"redShare", "=", "0.5"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"tilesPerDayWhite", "=", 
+     RowBox[{"tilesPerDayDemand", "*", "whiteShare"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerDayRed", "=", 
+     RowBox[{"tilesPerDayDemand", "*", "redShare"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Kiln", " ", "capacity"}], "&"}], " ", 
+     RowBox[{"takt", "/", "pitch"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"tilesPerHourKiln", "=", 
+     RowBox[{"kilnRateKgPerHour", "/", "tileMassKg"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"hoursPerWeekKiln", "=", 
+     RowBox[{"shiftsPerWeek", "*", "hoursPerShift"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"hoursPerDayKiln", "=", 
+     RowBox[{"hoursPerWeekKiln", "/", "daysPerWeek"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerWeekKiln", "=", 
+     RowBox[{"tilesPerHourKiln", "*", "hoursPerWeekKiln"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"tilesPerDayKiln", "=", 
+     RowBox[{"tilesPerWeekKiln", "/", "daysPerWeek"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"kilnUtilization", "=", 
+     RowBox[{"tilesPerDayDemand", "/", "tilesPerDayKiln"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"taktTimeSecPerTile", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"hoursPerDayKiln", "*", "3600."}], ")"}], "/", 
+      "tilesPerDayDemand"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"pitchSecPerCase", "=", 
+     RowBox[{"taktTimeSecPerTile", "*", "tilesPerCase"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"ONE", " ", "DRY", " ", "MILL", " ", "LINE"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dryMillRateKgPerHour", "=", "500."}], ";"}], "  ", 
+   RowBox[{"(*", 
+    RowBox[{"same", " ", "as", " ", "kiln", " ", "feed", " ", "rate"}], 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"changeoverHours", "=", "2."}], ";"}], "         ", 
+   RowBox[{"(*", 
+    RowBox[{"2", "-", 
+     RowBox[{"hour", " ", "CO", " ", "between", " ", "colors"}]}], "*)"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Daily", " ", "available", " ", "hours", " ", "for", " ", "dry", " ", 
+     "mill"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hoursPerDayDryMill", "=", 
+     RowBox[{"hoursPerWeekKiln", "/", "daysPerWeek"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"One", " ", "changeover", " ", "per", " ", "day", " ", 
+     RowBox[{"(", 
+      RowBox[{"white", "->", 
+       RowBox[{
+        RowBox[{"red", " ", "or", " ", "red"}], "->", "white"}]}], ")"}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hoursLostToCO", "=", "changeoverHours"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Net", " ", "available", " ", "hours"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"netHoursDryMill", "=", 
+     RowBox[{"hoursPerDayDryMill", "-", "hoursLostToCO"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Required", " ", 
+     RowBox[{"kg", "/", "day"}], " ", "per", " ", "color"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"kgPerDayWhite", "=", 
+     RowBox[{"tilesPerDayWhite", "*", "tileMassKg"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"kgPerDayRed", "=", 
+     RowBox[{"tilesPerDayRed", "*", "tileMassKg"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Required", " ", 
+     RowBox[{"kg", "/", "hour"}], " ", "per", " ", "color"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"requiredKgPerHourWhite", "=", 
+     RowBox[{"kgPerDayWhite", "/", "netHoursDryMill"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"requiredKgPerHourRed", "=", 
+     RowBox[{"kgPerDayRed", "/", "netHoursDryMill"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Utilization", " ", "of", " ", "dry", " ", "mill"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dryMillUtilizationWhite", "=", 
+     RowBox[{"requiredKgPerHourWhite", "/", "dryMillRateKgPerHour"}]}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"dryMillUtilizationRed", "=", 
+     RowBox[{"requiredKgPerHourRed", "/", "dryMillRateKgPerHour"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Total", " ", "utilization"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"dryMillUtilizationTotal", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"kgPerDayWhite", "+", "kgPerDayRed"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"dryMillRateKgPerHour", "*", "netHoursDryMill"}], ")"}]}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Granulate", " ", "silos"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"granulateCoverageDays", "=", "1.0"}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"granulateSiloKgWhite", "=", 
+     RowBox[{"granulateCoverageDays", "*", "kgPerDayWhite"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"granulateSiloKgRed", "=", 
+     RowBox[{"granulateCoverageDays", "*", "kgPerDayRed"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Supermarket", " ", "after", " ", "kiln"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"supermarketCoverageDays", "=", "1.0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"supermarketSafetyDays", "=", "0.2"}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"supermarketTiles", "=", 
+     RowBox[{"tilesPerDayDemand", "*", 
+      RowBox[{"(", 
+       RowBox[{"supermarketCoverageDays", "+", "supermarketSafetyDays"}], 
+       ")"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"supermarketCases", "=", 
+     RowBox[{"supermarketTiles", "/", "tilesPerCase"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Output", " ", "summary"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"<|", 
+    RowBox[{
+     RowBox[{"\"\<TilesPerDayDemand\>\"", "->", "tilesPerDayDemand"}], ",", 
+     RowBox[{"\"\<TilesPerDayKilnCapacity\>\"", "->", "tilesPerDayKiln"}], 
+     ",", 
+     RowBox[{"\"\<KilnUtilization\>\"", "->", "kilnUtilization"}], ",", 
+     RowBox[{"\"\<TaktTimeSecPerTile\>\"", "->", "taktTimeSecPerTile"}], ",", 
+     RowBox[{"\"\<PitchSecPerCase\>\"", "->", "pitchSecPerCase"}], ",", 
+     RowBox[{"\"\<DryMillNetHours\>\"", "->", "netHoursDryMill"}], ",", 
+     RowBox[{
+     "\"\<DryMillUtilizationWhite\>\"", "->", "dryMillUtilizationWhite"}], 
+     ",", 
+     RowBox[{"\"\<DryMillUtilizationRed\>\"", "->", "dryMillUtilizationRed"}],
+      ",", 
+     RowBox[{
+     "\"\<DryMillUtilizationTotal\>\"", "->", "dryMillUtilizationTotal"}], 
+     ",", 
+     RowBox[{"\"\<GranulateSiloKgWhite\>\"", "->", "granulateSiloKgWhite"}], 
+     ",", 
+     RowBox[{"\"\<GranulateSiloKgRed\>\"", "->", "granulateSiloKgRed"}], ",", 
+     RowBox[{"\"\<SupermarketTiles\>\"", "->", "supermarketTiles"}], ",", 
+     RowBox[{"\"\<SupermarketCases\>\"", "->", "supermarketCases"}]}], 
+    "|>"}]}]}]], "Input",
+ CellChangeTimes->{{3.984610932794018*^9, 3.984610932794018*^9}},
+ CellLabel->
+  "In[202]:=",ExpressionUUID->"2197dac0-f5f4-054f-8bf9-87ca1bcb21ce"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"TilesPerDayDemand\"\>", "\[Rule]", "24000.`"}], ",", 
+   RowBox[{"\<\"TilesPerDayKilnCapacity\"\>", "\[Rule]", "25600.`"}], ",", 
+   RowBox[{"\<\"KilnUtilization\"\>", "\[Rule]", "0.9375`"}], ",", 
+   RowBox[{"\<\"TaktTimeSecPerTile\"\>", "\[Rule]", "2.8800000000000003`"}], 
+   ",", 
+   RowBox[{"\<\"PitchSecPerCase\"\>", "\[Rule]", "69.12`"}], ",", 
+   RowBox[{"\<\"DryMillNetHours\"\>", "\[Rule]", "17.200000000000003`"}], ",", 
+   RowBox[{"\<\"DryMillUtilizationWhite\"\>", "\[Rule]", 
+    "0.5232558139534883`"}], ",", 
+   RowBox[{"\<\"DryMillUtilizationRed\"\>", "\[Rule]", 
+    "0.5232558139534883`"}], ",", 
+   RowBox[{"\<\"DryMillUtilizationTotal\"\>", "\[Rule]", 
+    "1.0465116279069766`"}], ",", 
+   RowBox[{"\<\"GranulateSiloKgWhite\"\>", "\[Rule]", "4500.`"}], ",", 
+   RowBox[{"\<\"GranulateSiloKgRed\"\>", "\[Rule]", "4500.`"}], ",", 
+   RowBox[{"\<\"SupermarketTiles\"\>", "\[Rule]", "28800.`"}], ",", 
+   RowBox[{"\<\"SupermarketCases\"\>", "\[Rule]", "1200.`"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.984610957809332*^9},
+ CellLabel->
+  "Out[244]=",ExpressionUUID->"3ebcfa7a-f620-8345-9642-ae88521a8e6e"]
+}, Open  ]]
+},
+WindowSize->{569.25, 768.75},
+WindowMargins->{{807.75, Automatic}, {70.5, Automatic}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4c0e3e13-bd97-ad4e-adf0-a38275cf31d3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 10815, 277, 2198, "Input",ExpressionUUID->"2197dac0-f5f4-054f-8bf9-87ca1bcb21ce"],
+Cell[11398, 301, 1220, 23, 189, "Output",ExpressionUUID->"3ebcfa7a-f620-8345-9642-ae88521a8e6e"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

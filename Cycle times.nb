@@ -1,0 +1,479 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17774,        471]
+NotebookOptionsPosition[     17273,        454]
+NotebookOutlinePosition[     17687,        470]
+CellTagsIndexPosition[     17644,        467]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Post", "=", "N"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Global", " ", "assumptions"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"workingDaysPerYear", "=", "240."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"hoursPerShift", "=", "8."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"shiftsPerWeek", "=", "12."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"daysPerWeek", "=", "5."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hoursPerDay", "=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"shiftsPerWeek", "*", "hoursPerShift"}], ")"}], "/", 
+     "daysPerWeek"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tilesPerCase", "=", "24."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tileMassKg", "=", "0.375"}], ";"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", "Demand", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"casesPerYear", "=", "240000."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"tilesPerYear", "=", 
+   RowBox[{"casesPerYear", "*", "tilesPerCase"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"tilesPerDayDemand", "=", 
+    RowBox[{"tilesPerYear", "/", "workingDaysPerYear"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Process", " ", "capacities"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Dry", " ", "mill"}], ",", "mixer", ",", 
+    RowBox[{
+    "dryer", " ", "assumed", " ", "same", " ", "throughput", " ", "in", " ", 
+     RowBox[{"kg", "/", "h"}]}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dryMillRateKgPerHour", "=", "500."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"mixerRateKgPerHour", "=", "500."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dryerRateKgPerHour", "=", "500."}], ";"}], "\[IndentingNewLine]", 
+  "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Convert", " ", "to", " ", 
+    RowBox[{"tiles", "/", "h"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dryMillTilesPerHour", "=", 
+   RowBox[{"dryMillRateKgPerHour", "/", "tileMassKg"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"mixerTilesPerHour", "=", 
+   RowBox[{"mixerRateKgPerHour", "/", "tileMassKg"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dryerTilesPerHour", "=", 
+    RowBox[{"dryerRateKgPerHour", "/", "tileMassKg"}]}], ";"}], 
+  "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Press", " ", "and", " ", "glaze", " ", "as", " ", "discrete", " ", 
+    "operations"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"cycleTimePressSec", "=", "5."}], ";"}], "   ", 
+  RowBox[{"(*", 
+   RowBox[{"s", "/", "tile"}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"cycleTimeGlazeSec", "=", "5."}], ";"}], "   ", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"assume", " ", "same"}], ",", 
+    RowBox[{"change", " ", "if", " ", "needed"}]}], "*)"}], 
+  "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", "Kiln", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"kilnRateKgPerHour", "=", "500."}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"kilnTilesPerHour", "=", 
+   RowBox[{"kilnRateKgPerHour", "/", "tileMassKg"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"kilnResidenceHours", "=", "14."}], ";"}], "\[IndentingNewLine]", 
+  "\n", 
+  RowBox[{"(*", "Packing", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"cycleTimePackSec", "=", "3."}], ";"}], "    ", 
+  RowBox[{"(*", 
+   RowBox[{"assumption", ",", 
+    RowBox[{"change", " ", "as", " ", "needed"}]}], "*)"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Cycle", " ", "times", " ", 
+    RowBox[{"(", 
+     RowBox[{"sec", "/", "tile"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ctDryMillSec", "=", 
+   RowBox[{"3600.", "/", "dryMillTilesPerHour"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ctMixerSec", "=", 
+   RowBox[{"3600.", "/", "mixerTilesPerHour"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ctDryerSec", "=", 
+   RowBox[{"3600.", "/", "dryerTilesPerHour"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ctPressSec", "=", "cycleTimePressSec"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ctGlazeSec", "=", "cycleTimeGlazeSec"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ctKilnSec", "=", 
+    RowBox[{"3600.", "/", "kilnTilesPerHour"}]}], ";"}], "  ", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"firing", " ", "rate"}], ",", 
+    RowBox[{"not", " ", "residence"}]}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ctPackSec", "=", "cycleTimePackSec"}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Lead", " ", "times", " ", "per", " ", "step"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Buffers", "/", "inventories"}], " ", "modeled", " ", "via", " ", 
+    "coverage", " ", "days"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"granulateSiloCoverageDays", "=", "1.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fifoBeforeKilnHours", "=", "0.5"}], ";"}], "  ", 
+  RowBox[{"(*", 
+   RowBox[{
+   "FIFO", " ", "time", " ", "from", " ", "glaze", " ", "to", " ", "kiln"}], 
+   "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fgSupermarketCoverageDays", "=", "1.2"}], ";"}], "  ", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"1", " ", "day"}], "+", 
+    RowBox[{"0.2", " ", "safety"}]}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Lead", " ", "time", " ", 
+     RowBox[{"definitions", ":", 
+      RowBox[{
+       RowBox[{"-", "Dry"}], " ", "mill"}]}]}], ",", "mixer", ",", "dryer", 
+    ",", "press", ",", "glaze", ",", 
+    RowBox[{
+     RowBox[{"pack", ":", 
+      RowBox[{"LT", "\[TildeTilde]", 
+       RowBox[{
+        RowBox[{"CT", " ", 
+         RowBox[{"(", 
+          RowBox[{"no", " ", "buffer", " ", "assumed"}], ")"}]}], "-", 
+        RowBox[{"Granulate", " ", "silos"}]}]}], ":", "LT"}], "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"coverageDays", "*", "24", " ", "h"}], "-", 
+       RowBox[{"FIFO", " ", "before", " ", 
+        RowBox[{"kiln", ":", "LT"}]}]}], "=", 
+      RowBox[{
+       RowBox[{"fifoBeforeKilnHours", "-", 
+        RowBox[{"Kiln", ":", "LT"}]}], "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"residence", " ", "time", " ", 
+          RowBox[{"(", 
+           RowBox[{"14", " ", "h"}], ")"}]}], "-", 
+         RowBox[{"FG", " ", 
+          RowBox[{"supermarket", ":", "LT"}]}]}], "=", 
+        RowBox[{"coverageDays", "*", "24", " ", "h"}]}]}]}]}]}], "*)"}], 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ltDryMillHours", "=", 
+   RowBox[{"ctDryMillSec", "/", "3600."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltMixerHours", "=", 
+   RowBox[{"ctMixerSec", "/", "3600."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltDryerHours", "=", 
+   RowBox[{"ctDryerSec", "/", "3600."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltPressHours", "=", 
+   RowBox[{"ctPressSec", "/", "3600."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltGlazeHours", "=", 
+   RowBox[{"ctGlazeSec", "/", "3600."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltGranulateSiloHours", "=", 
+   RowBox[{"granulateSiloCoverageDays", "*", "24."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltFIFOBeforeKilnHours", "=", "fifoBeforeKilnHours"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltKilnHours", "=", "kilnResidenceHours"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ltFGSupermarketHours", "=", 
+   RowBox[{"fgSupermarketCoverageDays", "*", "24."}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ltPackHours", "=", 
+    RowBox[{"ctPackSec", "/", "3600."}]}], ";"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Convert", " ", "to", " ", "days", " ", "for", " ", "convenience"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"toDays", "[", "h_", "]"}], ":=", 
+    RowBox[{"h", "/", "24."}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Output", " ", "summary"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{"<|", 
+  RowBox[{
+   RowBox[{"\"\<DryMill\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctDryMillSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltDryMillHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltDryMillHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<Mixer\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctMixerSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltMixerHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltMixerHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<Dryer\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctDryerSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltDryerHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltDryerHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<GranulateSilos\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CoverageDays\>\"", "->", "granulateSiloCoverageDays"}], 
+      ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltGranulateSiloHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltGranulateSiloHours", "]"}]}]}], "|>"}]}], 
+   ",", 
+   RowBox[{"\"\<Press\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctPressSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltPressHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltPressHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<Glaze\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctGlazeSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltGlazeHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltGlazeHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<FIFOBeforeKiln\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltFIFOBeforeKilnHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltFIFOBeforeKilnHours", "]"}]}]}], "|>"}]}], 
+   ",", 
+   RowBox[{"\"\<Kiln\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctKilnSec"}], ",", 
+      RowBox[{"\"\<ResidenceHours\>\"", "->", "ltKilnHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltKilnHours", "]"}]}]}], "|>"}]}], ",", 
+   RowBox[{"\"\<FGSupermarket\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CoverageDays\>\"", "->", "fgSupermarketCoverageDays"}], 
+      ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltFGSupermarketHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltFGSupermarketHours", "]"}]}]}], "|>"}]}], 
+   ",", 
+   RowBox[{"\"\<Packing\>\"", "->", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"\"\<CycleTimeSecPerTile\>\"", "->", "ctPackSec"}], ",", 
+      RowBox[{"\"\<LeadTimeHours\>\"", "->", "ltPackHours"}], ",", 
+      RowBox[{"\"\<LeadTimeDays\>\"", "->", 
+       RowBox[{"toDays", "[", "ltPackHours", "]"}]}]}], "|>"}]}]}], 
+  "|>"}]}], "Input",
+ CellChangeTimes->{{3.984611742325239*^9, 3.9846117423265953`*^9}},
+ CellLabel->
+  "In[245]:=",ExpressionUUID->"c633a8a5-5e86-3743-b600-cba947847884"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"DryMill\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "2.7`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.00075`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "0.00003125`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Mixer\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "2.7`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.00075`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "0.00003125`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Dryer\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "2.7`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.00075`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "0.00003125`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"GranulateSilos\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CoverageDays\"\>", "\[Rule]", "1.`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "24.`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "1.`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Press\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "5.`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.001388888888888889`"}], 
+      ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", 
+       "0.00005787037037037037`"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Glaze\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "5.`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.001388888888888889`"}], 
+      ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", 
+       "0.00005787037037037037`"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"FIFOBeforeKiln\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.5`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "0.020833333333333332`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Kiln\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "2.7`"}], ",", 
+      RowBox[{"\<\"ResidenceHours\"\>", "\[Rule]", "14.`"}], ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "0.5833333333333333`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"FGSupermarket\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CoverageDays\"\>", "\[Rule]", "1.2`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "28.799999999999997`"}], 
+      ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", "1.1999999999999997`"}]}], 
+     "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"Packing\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"CycleTimeSecPerTile\"\>", "\[Rule]", "3.`"}], ",", 
+      RowBox[{"\<\"LeadTimeHours\"\>", "\[Rule]", "0.0008333333333333333`"}], 
+      ",", 
+      RowBox[{"\<\"LeadTimeDays\"\>", "\[Rule]", 
+       "0.000034722222222222215`"}]}], "\[RightAssociation]"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9846117491573544`*^9},
+ CellLabel->
+  "Out[289]=",ExpressionUUID->"787e4a76-db81-7a4f-abb9-8cf5e1119eb0"]
+}, Open  ]]
+},
+WindowSize->{569.25, 768.75},
+WindowMargins->{{631.5, Automatic}, {Automatic, 60.75}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4486fd31-26f4-a147-b40c-5205833c5e41"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 13008, 348, 2331, "Input",ExpressionUUID->"c633a8a5-5e86-3743-b600-cba947847884"],
+Cell[13591, 372, 3666, 79, 337, "Output",ExpressionUUID->"787e4a76-db81-7a4f-abb9-8cf5e1119eb0"]
+}, Open  ]]
+}
+]
+*)
+
